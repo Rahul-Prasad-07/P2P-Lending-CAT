@@ -1,0 +1,23 @@
+{
+  "name": "defi-platform",
+  "version": "1.0.0",
+  "description": "Upgrad DeFi Platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rahul Prasad",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.2",
+    "@nomiclabs/hardhat-etherscan": "^3.1.6",
+    "chai": "^4.3.7",
+    "ethers": "^5.0.0",
+    "hardhat": "^2.12.7",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solidity-coverage": "^0.8.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  }
+}
