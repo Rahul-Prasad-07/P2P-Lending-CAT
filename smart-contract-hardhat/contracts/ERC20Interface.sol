@@ -1,5 +1,10 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.11;
+// SPDX-License-Identifier: DEFI
+
+pragma solidity 0.8.11; // Solidity compiler version
+
+import "hardhat/console.sol"; // Hardhat console logs
+import "./ERC20Interface.sol"; // ERC20 Interface
+
 
 
 // This interface functionalities will be used in other smart contract by ingerting it.
