@@ -3,32 +3,36 @@
 pragma solidity 0.8.11; // Solidity compiler version
 import "hardhat/console.sol"; // Hardhat console logs
 import "./ERC20Interface.sol"; // ERC20 Interface
+import "./SafeMathLibrary.sol"; // ERC20 Interface
 
+/**
+ * @title Upgrad Token
+ * @dev Token contract to create a new ERC20 Token - UpgradToken
+ * @dev Not Upgradable
+ */
+contract UpgradToken is ERC20Interface {
 
-contract CatToken is ERC20Interface {
+    // State Variables
+    using SafeMath for uint256;
+    string public name;
+    string public symbol;
+    uint256 public totalSupply;
+    uint8 public decimals;
+    address public owner;
 
-     // State Variables
-      
-      string public name;
-      string public symbol;
-      uint256 public totalSupply;
-      uint8 public decimals;
-      address public owner;
-   
-
-     // State Mappings
-    mapping(address => uint256) private tokenBalances;                         // token balance of trustees
-    mapping(address => mapping(address => uint256)) public allowed;          // register of all permissions from one user to another
+    // State Mappings
+    mapping (address => uint256) private tokenBalances;                         // token balance of trustees
+    mapping (address => mapping (address => uint256)) public allowed;           // register of all permissions from one user to another
 
     constructor(
         uint256 _initialAmount,
         string memory _tokenName,
-        uint8 _decimalunits,
-        string memory _tokenSyambol
-    ){
+        uint8 _decimalUnits,
+        string memory _tokenSymbol
+    ) {
         name = _tokenName;
-        decimals = _decimalunits;
-        symbol = _tokenSyambol;
+        decimals = _decimalUnits;
+        symbol = _tokenSymbol;
         totalSupply = _initialAmount.mul(10 ** uint256(decimals));
         tokenBalances[msg.sender] = totalSupply;
         owner = msg.sender;
@@ -56,14 +60,13 @@ contract CatToken is ERC20Interface {
         return true;
     }
 
-     /**
+    /**
      * @notice Send '_value' token to '_to' from '_from' on the condition it is approved by '_from'
      * @param _from The address of the sender
      * @param _to The address of the recipient
-     * @param _value The amount of token to be transferred 
+     * @param _value The amount of token to be transferred
      * @return success Whether the transfer was successful or not
      */
-
     function transferFrom(address _from, address _to, uint256 _value) public override returns (bool success) {
 
         // Check Balance
@@ -88,7 +91,6 @@ contract CatToken is ERC20Interface {
      * @param _value The amount of tokens to be approved for transfer
      * @return success Whether the approval was successful or not
      */
-
     function approve(address _spender, uint256 _value) public override returns (bool success) {
 
         // Check approval
@@ -104,12 +106,11 @@ contract CatToken is ERC20Interface {
         return true;
     }
 
-     /**
+    /**
      * @param _owner The address of the account owning tokens
      * @param _spender The address of the account able to transfer the tokens
      * @return remaining Amount of remaining tokens allowed to spent
      */
-
     function allowance(address _owner, address _spender) public override view returns (uint256 remaining) {
         return allowed[_owner][_spender];
     }
@@ -118,11 +119,7 @@ contract CatToken is ERC20Interface {
      * @param _owner The address from which the balance will be retrieved
      * @return balance The balance
      */
-     
     function balanceOf(address _owner) public override view returns (uint256 balance) {
         return tokenBalances[_owner];
     }
-
-
-    
 }
