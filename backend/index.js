@@ -19,7 +19,7 @@ app.use(bodyParser.json()) // to support json encoded bodies
 app.use(bodyParser.urlencoded({extended:true})) // to support Url-encoded bodies
 
 // logging
-if(config.env ==="ddevelopment"){app.use(logger('dev'))}
+if(config.env ==="development"){app.use(logger('dev'))}
 else if(config.env === "staging"){ app.use(logger)('dev')}
 else if(config.env === "production"){app.use(logger('combined'))}
 console.log("---------------------------");
