@@ -2,6 +2,8 @@
 
 const ethereumUtil = require("../blockchain/util");
 
+
+// This balance fun fetch ether balance of every account 
 async function balance(address){
 
     try{
