@@ -12,9 +12,36 @@ const web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.url))
 
 async function upgradToken(){
 
+    // refereance 
+    let contractObj
+    let contractJSON
+    let abi
+    let address
+
+    // create contract object and get instance of it 
+    address = config.smartContract.upgradToken.address
+    contractJSON = JSON.parse(fs.readFileSync(config.smartContract.upgradToken.buildPath));
+    abi = contractJSON.abi;
+    contractObj = new web3.eth.Contract(abi,address);
+    // -> u are using web3.eth.contract method to get instance of smart contract deployed pn connected eth network.
+    // -> this will take two paramters as input (abi and address ) both of these things together allows us to get instance of sc.
+    
+    return contractObj;
+
 }
 
 async function balance(address){
+
+    // contract object 
+    let contract = await upgradToken()
+
+    // get Balance 
+    let balance = await contract.method.balanceOf(address).call()
+
+    // handle decimal
+    let decimals = await contract.method.decimals().call()
+    balance = bigNumber(balance).div(10**decimals).toString()
+    return balance;
     
 }
 
