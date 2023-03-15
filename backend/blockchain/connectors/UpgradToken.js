@@ -47,13 +47,38 @@ async function balance(address){
 
 async function allowance(owner, spender){
 
+    // contract object 
+    let contract = await upgradToken();
+
+    // get balance 
+    let balance = await contract.method.allowance(owner, spender).call()
+
+    // handle decimals 
+    let decimals = await contract.method.decimals().call()
+    balance = bigNumber(balance).div(10**decimals).toString()
+
+    return balance;
+
 }
 
 async function rawValue(value){
 
+    // contract object
+    let contract = await upgradToken();
+
+    let decimals = await contract.method.decimals().call()
+    return parseInt(value * (10 ** decimals));
+
 }
 
 async function decimalBalance(value){
+
+    // contract object
+    let contract = await upgradToken();
+
+    let decimals = await contract.methods.decimals().call()
+    return bigNumber(value).div(10**decimals).toString();
+
 
 }
 
