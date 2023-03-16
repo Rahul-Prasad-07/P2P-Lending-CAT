@@ -126,16 +126,114 @@ async function signTransaction(rawTxObject, privateKey){
 
 }
 
+
+// transfer function trigger via Https post request
+// all of this parameters filter through, all of filtaration and sanitation that we do at controller level and then send to connector.
+// 1. get instance to smart contract
+// 2. remove decimals & convert into hex(bcz blockchain only understand hex)
+// 3. Inclued nounce property : increment over no of Tx that have previously been executed from perticular account.
+// 4. Calculate GasPrice : using helper function which is alredy written as part of ethereum utility inside blockchain folder.
+// 5. GasLimit : that u can define as part of your tx --> we have define global gaslimit in cofig 
+// 6. Mock call of this transfer function : reason to do validation of your execution by doing call tell u any issue for structuring your function or to avoid gas cosume problem
+// 7. send tarnsaction on network for this we are going to build our tx object (rawtx object that we than pass for signature)--> pass this rawtx in signTransction fun
+
 async function transfer(from, to, amount, privateKey){
+
+    try{
+
+    // contract object
+    let contract = await upgradToken();
+
+    // TX Data
+    amount = await rawValue(amount)  // remove decimals 
+    amount = web3.utils.toHex(amount)  // convert into hex 
+
+    let nonce = await web3.eth.getTrasactionCount(from)
+    nonce = web3.utils.toHex(nonce);
+
+    let gasPrice = await ethereumUtil.getGasPrice()
+    gasPrice = web3.utils.toHex(gasPrice)
+
+    // validate tx by calling it first 
+    await contract.method.transfer(to, amount).call()
+
+    // Create raw tx
+    // whatever data that u're passing to smart contract(to, value) that get inclued in data property of raw tx obj
+    let txData = contract.method.transfer(to,amount).encodeABI()
+    let rawTx = {
+        gasLimit: gasLimit,
+        data: txData,
+        from: from,
+        to: config.smartContract.upgradToken.address,
+        nonce: nonce,
+        gasPrice: gasPrice,
+    }
+
+    // sign transaction(wallet)
+    let signedTranstion = await signTransaction(rawTx, privateKey)
+
+    // return 
+    return await web3.eth.sendSignedTransaction(signedTransaction)
+
+    }
+    catch(error){
+        console.log(error);
+        throw new userException(new ErrorMessage(error.data.stack, 500));
+    }
+
+    
+
 
 }
 
 async function approve(from, to,amount,privateKey){
 
+    try{
+
+      // Contract Object
+      let contract = await upgradToken()
+
+      // TX Data
+      amount = await rawValue(amount)
+      amount = web3.utils.toHex(amount)
+
+      let nonce = await web3.eth.getTransactionCount(from)
+      nonce = web3.utils.toHex(nonce)
+
+      let gasPrice = await ethereumUtil.getGasPrice()
+      gasPrice = web3.utils.toHex(gasPrice)
+
+      let gasLimit = web3.utils.toHex(config.smartContract.upgradToken.gasLimit)
+
+      // Validate Transaction By Calling it first
+      await contract.methods.approve(to, amount).call()
+
+      // Create Raw transaction (Frontend)
+      let txData = contract.methods.approve(to, amount).encodeABI()
+      let rawTx = {
+          gasLimit: gasLimit,
+          data: txData,
+          from: from,
+          to: config.smartContract.upgradToken.address,
+          nonce : nonce,
+          gasPrice: gasPrice,
+      }
+
+      // Sign Transaction (Wallet)
+      let signedTransaction = await signTransaction(rawTx, privateKey)
+        
+      // Return
+      return await web3.eth.sendSignedTransaction(signedTransaction)
+
+
+    }
+    catch(error){
+        throw new userException(new ErrorMessage(error.data.stack, 500))
+    }
+
 }
 
-module.export ={
-
+module.exports = {
     balance,
     allowance,
     transfer,
@@ -143,5 +241,4 @@ module.export ={
     upgradToken: upgradToken,
     rawValue,
     decimalBalance
-
 }
