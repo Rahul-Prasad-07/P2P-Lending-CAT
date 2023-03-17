@@ -7,8 +7,7 @@ const ethereumUtil = require("../util")
 const userException = require('../../tools/userException')
 const ErrorMessage = require("../../constants/errors").ErrorMessage
 const Tx = require('ethereumjs-tx')
-const Web3 = require("web3");
-const { buffer } = require("stream/consumers");
+const Web3 = require("web3")
 const web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.url))
 
 async function upgradToken(){
@@ -120,7 +119,7 @@ async function signTransaction(rawTxObject, privateKey){
     // Sign transction
     let tx = new Tx.Transaction(rawTxObject);
     //let tx = new Tx(rawTxObject);
-    tx.sign(buffer.from(privateKey, 'hex'))
+    tx.sign(Buffer.from(privateKey, 'hex'))
     let serializedTx = tx.serialize()
     return "0x" + serializedTx.toString('hex')
 
@@ -170,7 +169,7 @@ async function transfer(from, to, amount, privateKey){
     }
 
     // sign transaction(wallet)
-    let signedTranstion = await signTransaction(rawTx, privateKey)
+    let signedTransaction = await signTransaction(rawTx, privateKey)
 
     // return 
     return await web3.eth.sendSignedTransaction(signedTransaction)
