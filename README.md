@@ -17,7 +17,7 @@ Peer to Peer(P2P) Lending Decentralized Application which helps borrowers for qu
 </div>
 <br/>
 
-![image](https://user-images.githubusercontent.com/99068989/218098474-84df0da9-2372-44e2-ad33-d4ac4a7de89d.png)
+![image](https://user-images.githubusercontent.com/99068989/226101475-94bbb406-9d3c-4756-b445-fd1d4f2b7a95.png)
 
 <br/>
 <br/>
