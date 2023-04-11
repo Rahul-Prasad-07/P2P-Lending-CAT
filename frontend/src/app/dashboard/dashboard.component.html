@@ -1,0 +1,137 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mt-5">
+      <div class="h2">New ask request <mat-icon class="align-middle">add_circle</mat-icon></div>
+      <form [formGroup]="askRequestForm" class="mb-4">
+        <div class="card mt-3">
+          <div class="card-body">
+            <mat-form-field appearance="standard" class="mr-4">
+              <mat-label>Borrow Amount: </mat-label>
+              <span matSuffix>GRAD</span>
+              <input matInput type="text" formControlName="askAmount">
+            </mat-form-field>
+            <mat-form-field appearance="standard" class="mr-2">
+              <mat-label>Payback Amount: </mat-label>
+              <span matSuffix>GRAD</span>
+              <input matInput type="text" formControlName="paybackAmount">
+            </mat-form-field>
+            <mat-form-field appearance="standard" class="mr-4">
+              <mat-label>Collateral Amount: </mat-label>
+              <span matSuffix>ETH</span>
+              <input matInput type="text" formControlName="collateral">
+            </mat-form-field>
+            <mat-form-field appearance="standard" class="mr-2">
+              <mat-label>Return Timestamp: </mat-label>
+              <input matInput type="text" formControlName="collateralCollectionTimeStamp">
+            </mat-form-field>
+            <mat-form-field appearance="standard" class="mr-2 flex-fill">
+              <mat-label>Purpose: </mat-label>
+              <input matInput type="text" formControlName="purpose">
+            </mat-form-field>
+          </div>
+          <div class="card-footer">
+            <button mat-button mat-raised-button class="ml-2" (click)="createAskRequest()">Create Ask Request</button>
+          </div>
+        </div>
+      </form>
+      <div class="h2 mb-4">Available ask requests </div>
+      <mat-accordion>
+        <div *ngFor="let request of askRequests" class="mt-2">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+               <mat-icon *ngIf="isRequestOpen(request)" style="color: lightgreen; font-size: 15px; padding-top: 5px;">circle</mat-icon>
+                <mat-icon *ngIf="!isRequestOpen(request)" style="color: red; font-size: 15px; padding-top: 5px;">circle</mat-icon>
+                {{request.requestContractAddress}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="mt-2">
+              Borrower <mat-icon class="align-middle">account_circle</mat-icon> {{request.asker}}
+            </div>
+            <div *ngIf="request.moneyLent">
+              Lender <mat-icon class="align-middle">account_circle</mat-icon> {{request.lender}}
+            </div>
+            <div class="mt-4">
+              <mat-icon class="align-middle">money</mat-icon> GRAD TOKEN
+            </div>
+            <div class="mt-2">Amount: <b>{{request.askAmount}} GRAD</b></div>
+            <div>Payback: <b>{{request.paybackAmount}} GRAD</b></div>
+            <div>Collateral: <b>{{request.collateral}} ETH</b></div>
+            <div>Purpose: <b>{{request.purpose}}</b></div>
+            <mat-divider class="my-2"></mat-divider>
+            <mat-chip-list>
+              <mat-chip color="primary" *ngIf="isRequestOpen(request)">Request Open</mat-chip>
+              <mat-chip color="accent" *ngIf="request.moneyLent">Money Lent</mat-chip>
+              <mat-chip *ngIf="request.debtSettled">Debt Settled</mat-chip>
+              <mat-chip *ngIf="request.collateralCollected">Collateral Collected</mat-chip>
+            </mat-chip-list>
+            <mat-divider class="my-2"></mat-divider>
+            <button *ngIf="isRequestOpen(request) && request.asker != currentUser.account" mat-button mat-stroked-button class="mr-2" (click)="lend(request)">Lend</button>
+            <button *ngIf="isRequestOpen(request) && request.asker == currentUser.account" mat-button mat-stroked-button class="mr-2" (click)="cancel(request)">Cancel</button>
+            <button *ngIf="isRequestServed(request) && !request.debtSettled && request.asker == currentUser.account" mat-button mat-stroked-button class="mr-2" (click)="payback(request)">Payback</button>
+            <button *ngIf="isRequestServed(request) && !request.debtSettled && request.lender == currentUser.account" mat-button mat-stroked-button class="mr-2" (click)="collectCollateral(request)">Collect Collateral</button>
+
+          </mat-expansion-panel>
+        </div>
+
+      </mat-accordion>
+    </div>
+    <div class="col-md-6">
+      <div class="mt-5">
+        <div class="h2">My Wallet <mat-icon class="align-middle">money</mat-icon></div>
+        <mat-card>
+          <mat-card-title>
+            <div style="font-size: 18px;">
+              <mat-icon class="align-middle">account_circle</mat-icon> {{currentUser.account}}
+            </div>
+          </mat-card-title>
+          <mat-card-content>
+            <mat-icon class="align-middle">account_balance_wallet</mat-icon> <b>  {{ethBalance}} ETH</b>
+            <br>
+            <mat-icon class="align-middle">account_balance_wallet</mat-icon> <b>  {{tokenBalance}} GRAD</b>
+
+            <form [formGroup]="transferForm">
+              <div class="card mt-3">
+                <div class="card-body">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Account ID: </mat-label>
+                    <input matInput type="text" formControlName="accountId">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="ml-2">
+                    <mat-label>Amount: </mat-label>
+                    <input matInput type="text" formControlName="amount">
+                  </mat-form-field>
+                </div>
+                <div class="card-footer">
+                  <button mat-button mat-raised-button class="ml-2" (click)="transfer()">Transfer</button>
+                </div>
+              </div>
+            </form>
+
+            <form [formGroup]="approveForm">
+              <div class="card mt-3">
+                <div class="card-body">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Account ID: </mat-label>
+                    <input matInput type="text" formControlName="accountId">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="ml-2">
+                    <mat-label>Amount: </mat-label>
+                    <input matInput type="text" formControlName="amount">
+                  </mat-form-field>
+                </div>
+                <div class="card-footer">
+                  <button mat-button mat-raised-button class="ml-2" (click)="approve()">Approve</button>
+                </div>
+              </div>
+            </form>
+
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button mat-flat-button (click)="logout()">Logout</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
