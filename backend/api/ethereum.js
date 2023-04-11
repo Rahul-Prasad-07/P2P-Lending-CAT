@@ -31,7 +31,8 @@ async function balance(req, res){
 
     }
 
-    module.exports = {
-        balance
-    }
+   
+}
+module.exports = {
+    balance
 }

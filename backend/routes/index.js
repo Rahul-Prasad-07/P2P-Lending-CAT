@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const misc = require("../api/misc");
 const upgradToken = require("../api/upgradToken");
-const defiPlatform = require("..api/defiPlatform");
+const defiPlatform = require("../api/defiPlatform");
 const ethereum = require("../api/ethereum");
 
 // Our backend app slipts our functionalites in 3 Groups

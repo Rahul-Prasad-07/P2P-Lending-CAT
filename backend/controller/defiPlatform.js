@@ -3,10 +3,12 @@
 const defiPlatformConnector = require("../blockchain/connectors/DefiPlatform")
 const upgradTokenConnector = require("../blockchain/connectors/UpgradToken")
 const ethereumUtil = require("../blockchain/util")
-const config = require("../blockchain/util")
-const web3 = require("web3")
-const web3 = new web3 (new web3.providers.httpProvider(config.blockchain.url))
+const config = require("../config/config")
+const Web3 = require("web3")
+const web3 = new Web3 (new Web3.providers.HttpProvider(config.blockchain.url))
+// const web3 = new Web3 (new Web3.providers.HttpProvider('https://sepolia.infura.io/v3/dd0d1ffd15954086a4c1eed15171a62d'))
 const util = require("../tools/util")
+
 
 // same excat things 
 // 1. taking the input parameters
