@@ -51,6 +51,11 @@ async function allowance(req, res){
         let response 
         
         // Get Data 
+        // Get Data
+        owner = req.query.owner
+        spender = req.query.spender
+        
+        // Get Balance
         response = await upgradTokenController.allowance(owner, spender)
 
         //  create response

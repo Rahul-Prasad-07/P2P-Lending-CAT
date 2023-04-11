@@ -4,7 +4,7 @@ const config = require('../config/config.js')
 const userException = require('../tools/userException')
 const userErrors = require("../constants/errors").userErrors
 const Web3 = require("web3")
-const web3 = new Web3(new Web3.provider.httpProvider(config.blockchain.url));
+const web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.url));
 
 // --> provide functionalites borrowed from web3 
 // created an instance of web3 by providing HTTP provider or blockchain provider.

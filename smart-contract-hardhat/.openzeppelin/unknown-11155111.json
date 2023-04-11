@@ -1,0 +1,80 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0xe2f422ec46fb61BAF8eB1a6eeb34D8bB7be3A88A",
+    "txHash": "0x538565c42bf6b429236db46dfa4df3a2ea980557a6ab5a99e834ed8e8254a901"
+  },
+  "proxies": [
+    {
+      "address": "0x38aFF70c431B0d794E050dC298E825C514a88719",
+      "txHash": "0xd7e1f30e503ab5929a684109339e096bdb93fa1c48cce0450489e7c8092b76bf",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "a7a6de342c6ed4878c287dac054381ca0e3fd80478ec91cd0d2c53fead40fce3": {
+      "address": "0x3e78c06BfCab17Eac4C079982142466edeE88C97",
+      "txHash": "0x0cb76c9e1673decb1a1e12c04d481e9fac5db2212ab62f6863e33702bd4c7867",
+      "layout": {
+        "solcVersion": "0.8.11",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "flaggingThreshold",
+            "offset": 2,
+            "slot": "0",
+            "type": "t_uint16",
+            "contract": "Governance",
+            "src": "contracts\\GovernanceContract.sol:15"
+          },
+          {
+            "label": "currentFlags",
+            "offset": 4,
+            "slot": "0",
+            "type": "t_uint16",
+            "contract": "Governance",
+            "src": "contracts\\GovernanceContract.sol:16"
+          },
+          {
+            "label": "isPlatformEnabled",
+            "offset": 6,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Governance",
+            "src": "contracts\\GovernanceContract.sol:17"
+          }
+        ],
+        "types": {
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    }
+  }
+}
