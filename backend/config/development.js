@@ -29,19 +29,20 @@ config.server.port = 5001
 
 /******************** Blockchain *************************/
 config.blockchain = {}
-config.blockchain.url = "http://127.0.0.1:8545"
-config.blockchain.chainId = "5777"
+// config.blockchain.url = "http://127.0.0.1:8545"
+config.blockchain.url = "https://sepolia.infura.io/v3/dd0d1ffd15954086a4c1eed15171a62d"
+config.blockchain.chainId = "5"
 
 /******************** Blockchain *************************/
 
 /******************** Smart Contract *************************/
 config.smartContract = {}
 config.smartContract.upgradToken = {}
-config.smartContract.upgradToken.address = "0x54a716fBBA0057A09acEB90f7AD2624Dc58f7113" // need to upgrad
+config.smartContract.upgradToken.address = "0x24ACb50C27CD21D05a9302686b1256d8a081602e" // need to upgrad:done
 config.smartContract.upgradToken.gasLimit = 100000
 config.smartContract.upgradToken.buildPath = smartContractDirectory + "/artifacts/contracts/CatTokenContract.sol/UpgradToken.json"
 config.smartContract.defiplatform = {}
-config.smartContract.defiplatform.address = "0xC65A4AAC3a8D49E824118e2955590A507d58cFF3" // need to upgrad
+config.smartContract.defiplatform.address = "0x45E6aB80EFFaAcd8d430B696452443De110FC0B9" // need to upgrad:done
 config.smartContract.defiplatform.gasLimit = 6000000
 config.smartContract.defiplatform.buildPath = smartContractDirectory + "/artifacts/contracts/DeFiPlatformContract.sol/DefiPlatform.json"
 
