@@ -1,0 +1,45 @@
+.bg-dash{
+    background-color: #012169;
+}
+
+.w-icon{
+    padding: 0px 25px;
+}
+
+.h2{
+    color: #fff;
+}
+
+.card-dash{
+    border-width: 1px;
+    border-color: #eff0f6;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px 0 rgba(20, 20, 43, 0.08);
+    padding-bottom: 4rem;
+}
+
+.btn:hover {
+    background-color: #012169;
+    color: white;
+    cursor: pointer;
+  }
+
+  .button {
+    border-radius: 4px;
+    background-color: #012169;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 15px;
+    
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+
+  .button:hover{
+    background-color: #fff;
+    color: black;
+  }
+  
+  
