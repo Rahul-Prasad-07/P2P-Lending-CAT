@@ -2,7 +2,7 @@ import {ethers, upgrades} from "hardhat";
 
 async function main() {
 	
-	const tokenSupply = 100000000;
+	const tokenSupply = 10000000;
 	const tokenName = "CatCoin";
 	const tokenDecimals = 0;
 	const tokenSymbol = "CAT";
