@@ -1,13 +1,13 @@
-'use strict'
+'use strict';
 
 const defiPlatformController = require("../controller/defiPlatform")
 const util = require("../tools/util")
 
-async function ask(req,res){
+async function ask(req, res){
 
     try{
 
-        // reference
+        // Reference
         let from
         let privateKey
         let amount
@@ -15,9 +15,9 @@ async function ask(req,res){
         let purpose
         let collateral
         let collateralCollectionTimeStamp
-        let response 
+        let response
 
-        // Get data 
+        // Get Data
         from = req.body.from
         amount = req.body.amount
         privateKey = req.body.privateKey
@@ -26,16 +26,14 @@ async function ask(req,res){
         collateral = req.body.collateral
         collateralCollectionTimeStamp = req.body.collateralCollectionTimeStamp
 
-        // get data 
+        // Get Data
         response = await defiPlatformController.ask(from, amount, privateKey, paybackAmount, purpose, collateral, collateralCollectionTimeStamp)
 
-        //create response 
+        // Create Response
         response = await util.successResponse(response)
 
-        // Send response 
+        // Send Response
         res.status(200).send(response)
-
-
 
     }
     catch(exception){
@@ -43,6 +41,7 @@ async function ask(req,res){
     }
 
 }
+
 async function request(req, res){
 
     try{
