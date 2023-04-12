@@ -1,29 +1,25 @@
-'use strict'
+'use strict';
 
-const ethereumUtil = require("../blockchain/util");
+const ethereumUtil = require("../blockchain/util")
 
-
-// This balance fun fetch ether balance of every account 
 async function balance(address){
 
-    try{
+    try {
 
-        // referance 
+        // Reference
         let response
-        let balance 
+        let balance
 
-        // Get Balance 
+        // Get Balance
         balance = await ethereumUtil.getETHBalance(address)
         response = {balance}
 
-        return response 
+        return response
 
-
-
+    } catch (error) {
+        throw error
     }
-    catch(error){
-        throw error 
-    }
+
 }
 
 module.exports = {

@@ -1,7 +1,5 @@
 'use strict';
 
-// This is the final file of our entire DeFi Platform
-
 const config = require("../../config/config")
 const fs = require('fs')
 const ethereumUtil = require("../util")
@@ -10,162 +8,147 @@ const ErrorMessage = require("../../constants/errors").ErrorMessage
 const upgradToken = require("./UpgradToken")
 const Tx = require('ethereumjs-tx')
 const Web3 = require("web3")
-const web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.url)) // getting instance of web3
+const web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.url))
 
-// defiPlatform fun allows us to get instnace of smart contract
 async function defiPlatform(){
 
-    // referenace
+    // Reference
     let contractObj
     let contractJSON
     let abi
     let address
 
-    // create contract object
-    address = config.smartContract.defiPlatform.address
-    contractJSON = JSON.parse(fs.readdirSync(config.smartContract.defiPlatform.buildPath));
+    // Create Contract Object
+    address = config.smartContract.defiplatform.address
+    contractJSON = JSON.parse(fs.readFileSync(config.smartContract.defiplatform.buildPath));
     abi = contractJSON.abi;
-    // we use both abi & address to get instance of contract ny using web3.eth.Contract method
-    contractObj = new web3.eth.Contract(abi,address);
+    contractObj = new web3.eth.Contract(abi, address)
 
-    return contractObj;
-    
+    return contractObj
 }
 
-// signTransaction fun helps to sign transaction : Helper function
-async function signTransaction(rawTxObject, privateKey){
+async function signTransaction(rawTxObject, privateKey) {
 
-    // sign Transaction
+    // Sign Transaction
     let tx = new Tx.Transaction(rawTxObject);
-     // let tx = new tx(rawTxObject)
-    tx.sign(Buffer.from(privateKey, 'hex'));
-    let serializedTx = tx.serialize();
-    return "0x"+ serializedTx.toString('hex');
+    // let tx = new Tx(rawTxObject)
+    tx.sign(Buffer.from(privateKey, 'hex'))
+    let serializedTx = tx.serialize()
+    return "0x" + serializedTx.toString('hex')
 
 }
 
-async function ask(from, amount, privateKey, paybackAmount, purpose, collateral, collateralCollectionTimeStamp, nonce){
+async function ask(from, amount, privateKey, paybackAmount, purpose, collateral, collateralCollectionTimeStamp, nonce) {
 
-    try{
+    try {
 
-        // contract Object : getting instance of smart contract
-        let contract = await defiPlatform();
+        // Contract Object
+        let contract = await defiPlatform()
 
-        // Token address : for executing ask req we need to include a token account or 
-        // smart contract token that we are raisng borrow request : we raised borrow req for upGrad Token ( CAT token)
-        let tokenAddress = web3.utils.toChecksumAddress(config.smartContract.upgradToken.address);
+        // Token Address
+        let tokenAddress = web3.utils.toChecksumAddress(config.smartContract.upgradToken.address)
 
-        // Tx data : buil Transaction data using first getting & converting into 'hex'
-        amount = await upgradToken.rawValue(amount);
-        amount = web3.utils.toHex(amount);
-        paybackAmount = await upgradToken.rawValue(paybackAmount);
-        paybackAmount = web3.utils.toHex(paybackAmount);
+        // TX Data
+        amount = await upgradToken.rawValue(amount)
+        amount = web3.utils.toHex(amount)
+        paybackAmount = await upgradToken.rawValue(paybackAmount)
+        paybackAmount = web3.utils.toHex(paybackAmount)
 
-        // Manage Nonce : get nonce as we get for upgradToken file
-        if(nonce == null){
-            nonce = await web3.eth.getTransactionCount(from);
+        // Manage Nonce
+        if (nonce == null){
+            nonce = await web3.eth.getTransactionCount(from)
         }
-        nonce = web3.utils.toHex(nonce);
+        nonce = web3.utils.toHex(nonce)
+    
+        
+        // Get Gas Price
+        let gasPrice = await ethereumUtil.getGasPrice()
+        gasPrice = web3.utils.toHex(gasPrice)
 
-        // Get Gas Price 
-        let gasPrice  = await ethereumUtil.getGasPrice();
-        gasPrice = web3.utils.toHex(gasPrice);
+        // Get Gas Limit
+        let gasLimit = web3.utils.toHex(config.smartContract.defiplatform.gasLimit)
 
-        // Get Gas Limit 
-        let gasLimit = web3.utils.toHex(config.smartContract.defiPlatform.gasLimit);
+        // Collateral
+        collateral = web3.utils.toWei(collateral, 'ether')
+        collateral = web3.utils.toHex(collateral)
+        collateralCollectionTimeStamp = parseInt(collateralCollectionTimeStamp)
 
-        // collateral
-        collateral = web3.utils.toWei(collateral, 'ether');
-        collateral = web3.utils.toHex(collateral);
-        collateralCollectionTimeStamp = parseInt(collateralCollectionTimeStamp);
+        // Validate Transaction By Calling it first
+        await contract.methods.ask(amount, paybackAmount, purpose, tokenAddress, collateralCollectionTimeStamp).call({value:collateral})
 
-        // validate transaction by calling it first 
-        await contract.method.ask(amount, paybackAmount, purpose, tokenAddress, collateralCollectionTimeStamp).call({value: collateral});
-
-        // create raw transaction
-        let txData = contract.method.ask(amount, paybackAmount, purpose, tokenAddress, collateralCollectionTimeStamp).encodeABI()
-
+        // Create Raw transaction
+        let txData = contract.methods.ask(amount, paybackAmount, purpose, tokenAddress, collateralCollectionTimeStamp).encodeABI()
         let rawTx = {
-            gasLimit : gasLimit,
+            gasLimit: gasLimit,
             data: txData,
-            from : from,
-            to : config.smartContract.defiPlatform.address,
+            from: from,
+            to: config.smartContract.defiplatform.address,
             nonce : nonce,
-            gasPrice : gasPrice,
-            value : collateral,
-            chainId : config.blockchain.chainId
+            gasPrice: gasPrice,
+            value: collateral,
+            chainId: config.blockchain.chainId
         }
 
-        // Sign transaction (wallet)
-        let signedTransaction = await signTransaction(rawTx, privateKey);
+        // Sign Transaction (Wallet)
+        let signedTransaction = await signTransaction(rawTx, privateKey)
+        
+        // Return
+        return await web3.eth.sendSignedTransaction(signedTransaction)
 
-        return await web3.eth.sendSignedTransaction(signedTransaction);
-
-
-    }
-    catch(error){
-        console.error(error);
-        throw new userException(new ErrorMessage(error.data.stack, 500));
-
+    } catch (error) {
+        console.error(error)
+        throw new userException(new ErrorMessage(error.data.stack, 500))
     }
 
 }
 
-// getrequest : allows to get request from the network
-async function getRequests(){
+async function getRequests() {
 
-    // contract object 
-    let contract = await defiPlatform();
-    return (await contract.method.getRequests().call());
-
-}
-
-// getRequestsParameters : allows to get request parameters for each indivudal req
-async function getRequestsParameters(address){
-
-    // contract object
-    let contract = await defiPlatform();
-    return (await contract.method.getRequestsParameters(address).call());
+    // Contract Object
+    let contract = await defiPlatform()
+    return (await contract.methods.getRequests().call())
 
 }
 
-// getRequestsState : allows to get state of each of our request contract object
-// evertime new "ask" request contract created, if you want to check state of that ask request the u can call get request state method.
-async function getRequestsState(address){
+async function getRequestParameters(address) {
 
-     // Contract Object
-     let contract = await defiPlatform()
-     return (await contract.methods.getRequestState(address).call())
- 
+    // Contract Object
+    let contract = await defiPlatform()
+    return (await contract.methods.getRequestParameters(address).call())
 
 }
 
-// getCollateralBalance : give balance of every single request contract that is created after ask req made
-async function getCollateralBalance(address){
+async function getRequestState(address) {
+
+    // Contract Object
+    let contract = await defiPlatform()
+    return (await contract.methods.getRequestState(address).call())
+
+}
+
+async function getCollateralBalance(address) {
 
     // Contract Object
     let contract = await defiPlatform()
     return (await contract.methods.getCollateralBalance(address).call())
 
-
 }
 
-// cancel, lend, payback,collect : all fun we can operate on an ask request contract after it has been created
-async function cancel(from, privateKey, requestAddress){
+async function cancel(from, privateKey, requestAddress) {
 
-    try{
+    try {
 
-        // contract object 
-        let contract = await defiPlatform();
+        // Contract Object
+        let contract = await defiPlatform()
 
-        // Tx data 
-        let nonce = await web3.eth.getTransactionCount(from);
-        nonce = web3.utils.toHex(nonce);
+        // TX Data
+        let nonce = await web3.eth.getTransactionCount(from)
+        nonce = web3.utils.toHex(nonce)
 
-        let gasPrice = await ethereumUtil.getGasPrice();
-        gasPrice = web3.utils.toHex(gasPrice);
+        let gasPrice = await ethereumUtil.getGasPrice()
+        gasPrice = web3.utils.toHex(gasPrice)
 
-        let gasLimit = web3.utils.toHex(config.smartContract.defiPlatform.gasLimit);
+        let gasLimit = web3.utils.toHex(config.smartContract.defiplatform.gasLimit)
 
         // Validate Transaction By Calling it first
         await contract.methods.cancelRequest(requestAddress).call({from: from})
@@ -173,28 +156,28 @@ async function cancel(from, privateKey, requestAddress){
         // Create Raw transaction (Frontend)
         let txData = contract.methods.cancelRequest(requestAddress).encodeABI()
         let rawTx = {
-            gasLimit : gasLimit,
-            data : txData,
-            from : from,
-            to : config.smartContract.defiPlatform.address,
+            gasLimit: gasLimit,
+            data: txData,
+            from: from,
+            to: config.smartContract.defiplatform.address,
             nonce : nonce,
-            gasPrice : gasPrice
+            gasPrice: gasPrice
         }
 
-        // sign transaction (wallet)
-        let signedTransaction = await signTransaction(rawTx, privateKey);
+        // Sign Transaction (Wallet)
+        let signedTransaction = await signTransaction(rawTx, privateKey)
+        
+        // Return
+        return await web3.eth.sendSignedTransaction(signedTransaction)
 
-        return await web3.eth.sendSignedTransaction(signedTransaction);
-
-    }
-    catch(error){
-        console.error(error);
-        throw new userException(new ErrorMessage(error.data.stack, 500));
+    } catch (error) {
+        console.error(error)
+        throw new userException(new ErrorMessage(error.data.stack, 500))
     }
 
 }
 
-async function lend(from, privateKey, requestAddress){
+async function lend(from, privateKey, requestAddress) {
 
     try {
 
@@ -235,10 +218,9 @@ async function lend(from, privateKey, requestAddress){
         throw new userException(new ErrorMessage(error.data.stack, 500))
     }
 
-
 }
 
-async function payback(from, privateKey, requestAddress){
+async function payback(from, privateKey, requestAddress) {
 
     try {
 
@@ -281,7 +263,7 @@ async function payback(from, privateKey, requestAddress){
 
 }
 
-async function collect(from, privateKey, requestAddress){
+async function collect(from, privateKey, requestAddress) {
 
     try {
 
@@ -324,11 +306,11 @@ async function collect(from, privateKey, requestAddress){
 
 }
 
-module.export ={
+module.exports = {
     ask,
     getRequests,
-    getRequestsParameters,
-    getRequestsState,
+    getRequestParameters,
+    getRequestState,
     cancel,
     getCollateralBalance,
     lend,
