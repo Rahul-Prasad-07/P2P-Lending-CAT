@@ -1,5 +1,16 @@
 <h1 align="center">P2P-Lending-CAT</h1>
-<div align="center">
+
+  
+## Start Dapp
+  - start your ganach
+  - start backend `cd backend` and `npm start`
+  - start frontend `cd frontend` and `npm start`
+ 
+ 
+ <br/>
+ <br/>
+ <br/>
+ <div align="center"> 
 <h3>
 Peer to Peer(P2P) Lending Decentralized Application which helps borrowers for quick loans from lenders at rates that are generally lower than those traditional financial institutions.
 </h3>
