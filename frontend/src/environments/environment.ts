@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://127.0.0.1:5001/v1'
+  apiUrl: 'http://backend:3000/v1' // Replace 'backend' with the name of the backend service in your Docker Compose file
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
