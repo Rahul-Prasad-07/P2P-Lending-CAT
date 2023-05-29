@@ -1,12 +1,32 @@
-version: '3'
+version: "3"
 
 services:
-  frontend:
-    build: ./frontend
-    ports:
-      - 80:80
-
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - ganache
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - 3000:3000
+    depends_on:
+      - backend
+
+  smart-contract:
+    build:
+      context: ./smart-contract-hardhat
+      dockerfile: Dockerfile
+    depends_on:
+      - ganache
+
+  ganache:
+    image: trufflesuite/ganache-cli:latest
+    ports:
+      - 8545:8545
