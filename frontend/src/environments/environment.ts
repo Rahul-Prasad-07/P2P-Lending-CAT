@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://127.0.0.1:5001/v1'
+  apiUrl: 'http://127.0.0.1:5001'
   // apiUrl: 'https://6472e1ba56504475fdbef4c5--bespoke-choux-6a3fbe.netlify.app/'
 };
 
