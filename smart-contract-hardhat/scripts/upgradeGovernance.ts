@@ -13,7 +13,7 @@ async function upgrade() {
 	// manually to make sure everything is compiled
 	// await hre.run('compile');
 	
-	const GOVERNANCE_ADDRESS = "0x5502ffD04eBC1b1F444cC06B2495a5737E80b604";
+	const GOVERNANCE_ADDRESS = "0x59d2A51AFd90acC87C0bf70210D10A924F583BE4"; // upgraded address
 	
 	// 1. Upgrade Governance Contract
 	const GovernanceV2 = await ethers.getContractFactory("Governance");

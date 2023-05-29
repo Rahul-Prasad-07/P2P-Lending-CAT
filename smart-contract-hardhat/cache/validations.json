@@ -1,0 +1,601 @@
+{
+  "version": "3.4",
+  "log": [
+    {
+      "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable": {
+        "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:57",
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.11"
+      },
+      "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable": {
+        "src": "@openzeppelin\\contracts-upgradeable\\utils\\AddressUpgradeable.sol:9",
+        "version": {
+          "withMetadata": "3056ee0f1ef6482c0d23b65ba6636f6181e72407509b2fbcdf20b8812ab1122f",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.11"
+      },
+      "contracts/DeFiPlatformContract.sol:DefiPlatform": {
+        "src": "contracts\\DeFiPlatformContract.sol:15",
+        "version": {
+          "withMetadata": "6c16aefb5dd5d3f794764f8a41d2c95e9eb506ef4e779d86387c9da7b9d47dbd",
+          "withoutMetadata": "ca8d0c8e3242912b6c47422c9b134a994cac8771793283bb68628bca44f3a994",
+          "linkedWithoutMetadata": "ca8d0c8e3242912b6c47422c9b134a994cac8771793283bb68628bca44f3a994"
+        },
+        "inherit": [
+          "contracts/RequestFactoryAbstract.sol:RequestFactory"
+        ],
+        "libraries": [],
+        "methods": [
+          "(address)",
+          "ask(uint256,uint256,string,address payable,uint256)",
+          "lend(address payable)",
+          "payback(address payable)",
+          "collectColletral(address payable)",
+          "cancelRequest(address payable)",
+          "getRequestParameters(address payable)",
+          "getRequestState(address payable)",
+          "getCollateralBalance(address)",
+          "getRequests()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "DefiPlatform",
+            "src": "contracts\\DeFiPlatformContract.sol:33"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "lendingRequests",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "DefiPlatform",
+              "src": "contracts\\DeFiPlatformContract.sol:25"
+            },
+            {
+              "label": "requestIndex",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "DefiPlatform",
+              "src": "contracts\\DeFiPlatformContract.sol:26"
+            },
+            {
+              "label": "userRequestCount",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "DefiPlatform",
+              "src": "contracts\\DeFiPlatformContract.sol:27"
+            },
+            {
+              "label": "validRequest",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "DefiPlatform",
+              "src": "contracts\\DeFiPlatformContract.sol:28"
+            },
+            {
+              "label": "governance",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_address",
+              "contract": "DefiPlatform",
+              "src": "contracts\\DeFiPlatformContract.sol:31"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.11"
+      },
+      "contracts/ERC20Interface.sol:ERC20Interface": {
+        "src": "contracts\\ERC20Interface.sol:5",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "approve(address,uint256)",
+          "allowance(address,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.11"
+      },
+      "contracts/GovernanceContract.sol:Governance": {
+        "src": "contracts\\GovernanceContract.sol:13",
+        "version": {
+          "withMetadata": "c8a9b8fd83f65d4b7697fdbb0727d56ca1a62a9ff38b0ad2560cc7cac1f6b187",
+          "withoutMetadata": "a7a6de342c6ed4878c287dac054381ca0e3fd80478ec91cd0d2c53fead40fce3",
+          "linkedWithoutMetadata": "a7a6de342c6ed4878c287dac054381ca0e3fd80478ec91cd0d2c53fead40fce3"
+        },
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "initialize(uint16)",
+          "flag()",
+          "enableFlag()",
+          "changePlatformState(bool)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+            },
+            {
+              "label": "flaggingThreshold",
+              "offset": 2,
+              "slot": "0",
+              "type": "t_uint16",
+              "contract": "Governance",
+              "src": "contracts\\GovernanceContract.sol:15"
+            },
+            {
+              "label": "currentFlags",
+              "offset": 4,
+              "slot": "0",
+              "type": "t_uint16",
+              "contract": "Governance",
+              "src": "contracts\\GovernanceContract.sol:16"
+            },
+            {
+              "label": "isPlatformEnabled",
+              "offset": 6,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Governance",
+              "src": "contracts\\GovernanceContract.sol:17"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint16": {
+              "label": "uint16",
+              "numberOfBytes": "2"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.11"
+      },
+      "contracts/LendingRequestContract.sol:LendingRequest": {
+        "src": "contracts\\LendingRequestContract.sol:13",
+        "version": {
+          "withMetadata": "85c9b6a731b691204cf41cee3dae22bed2f0b24ce8e2d3d49a5991fea42f2ca9",
+          "withoutMetadata": "db03c6b463f44ee98d7cd96ea21db7eac50cc2673aedb1dd0cb0c35275e6533a",
+          "linkedWithoutMetadata": "db03c6b463f44ee98d7cd96ea21db7eac50cc2673aedb1dd0cb0c35275e6533a"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "(address payable,uint256,uint256,string,address payable,address payable,uint256,uint256)",
+          "lend(address payable)",
+          "payback(address payable)",
+          "collectCollateral(address payable)",
+          "cancelRequest(address)",
+          "getRequestParameters()",
+          "getRequestState()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "LendingRequest",
+            "src": "contracts\\LendingRequestContract.sol:31"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address_payable",
+              "contract": "LendingRequest",
+              "src": "contracts\\LendingRequestContract.sol:16"
+            },
+            {
+              "label": "token",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_address_payable",
+              "contract": "LendingRequest",
+              "src": "contracts\\LendingRequestContract.sol:17"
+            },
+            {
+              "label": "asker",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_address_payable",
+              "contract": "LendingRequest",
+              "src": "contracts\\LendingRequestContract.sol:18"
+            },
+            {
+              "label": "lender",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_address_payable",
+              "contract": "LendingRequest",
+              "src": "contracts\\LendingRequestContract.sol:19"
+            },
+            {
+              "label": "collateral",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_uint256",
+              "contract": "LendingRequest",
+              "src": "contracts\\LendingRequestContract.sol:20"
+            },
+            {
+              "label": "amountAsked",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_uint256",
+              "contract": "LendingRequest",
+              "src": "contracts\\LendingRequestContract.sol:21"
+            },
+            {
+              "label": "paybackAmount",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_uint256",
+              "contract": "LendingRequest",
+              "src": "contracts\\LendingRequestContract.sol:22"
+            },
+            {
+              "label": "purpose",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_string_storage",
+              "contract": "LendingRequest",
+              "src": "contracts\\LendingRequestContract.sol:23"
+            },
+            {
+              "label": "collateralCollectionTimeStamp",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_uint256",
+              "contract": "LendingRequest",
+              "src": "contracts\\LendingRequestContract.sol:24"
+            },
+            {
+              "label": "moneyLent",
+              "offset": 0,
+              "slot": "9",
+              "type": "t_bool",
+              "contract": "LendingRequest",
+              "src": "contracts\\LendingRequestContract.sol:26"
+            },
+            {
+              "label": "debtSettled",
+              "offset": 1,
+              "slot": "9",
+              "type": "t_bool",
+              "contract": "LendingRequest",
+              "src": "contracts\\LendingRequestContract.sol:27"
+            },
+            {
+              "label": "collateralCollected",
+              "offset": 2,
+              "slot": "9",
+              "type": "t_bool",
+              "contract": "LendingRequest",
+              "src": "contracts\\LendingRequestContract.sol:28"
+            }
+          ],
+          "types": {
+            "t_address_payable": {
+              "label": "address payable",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.11"
+      },
+      "contracts/RequestFactoryAbstract.sol:RequestFactory": {
+        "src": "contracts\\RequestFactoryAbstract.sol:12",
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.11"
+      },
+      "contracts/SafeMathLibrary.sol:SafeMath": {
+        "src": "contracts\\SafeMathLibrary.sol:13",
+        "version": {
+          "withMetadata": "136e57be6a4e7345ac077bec399b72b731a79edc1c5edf2a3c691780ee374773",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.11"
+      },
+      "contracts/UpgradTokenContract.sol:UpgradToken": {
+        "src": "contracts\\UpgradTokenContract.sol:13",
+        "version": {
+          "withMetadata": "56e7c771040244be77d5494800cff4701d3d23723192063b9517c6128f69aabe",
+          "withoutMetadata": "b6f6ec7d996a2780260057dad8a295f5c9333412a8c53d82c07d604010a4f7aa",
+          "linkedWithoutMetadata": "b6f6ec7d996a2780260057dad8a295f5c9333412a8c53d82c07d604010a4f7aa"
+        },
+        "inherit": [
+          "contracts/ERC20Interface.sol:ERC20Interface"
+        ],
+        "libraries": [
+          "contracts/SafeMathLibrary.sol:SafeMath"
+        ],
+        "methods": [
+          "(uint256,string,uint8,string)",
+          "transfer(address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "approve(address,uint256)",
+          "allowance(address,address)",
+          "balanceOf(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "UpgradToken",
+            "src": "contracts\\UpgradTokenContract.sol:27"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "name",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_string_storage",
+              "contract": "UpgradToken",
+              "src": "contracts\\UpgradTokenContract.sol:17"
+            },
+            {
+              "label": "symbol",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_string_storage",
+              "contract": "UpgradToken",
+              "src": "contracts\\UpgradTokenContract.sol:18"
+            },
+            {
+              "label": "totalSupply",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint256",
+              "contract": "UpgradToken",
+              "src": "contracts\\UpgradTokenContract.sol:19"
+            },
+            {
+              "label": "decimals",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_uint8",
+              "contract": "UpgradToken",
+              "src": "contracts\\UpgradTokenContract.sol:20"
+            },
+            {
+              "label": "owner",
+              "offset": 1,
+              "slot": "3",
+              "type": "t_address",
+              "contract": "UpgradToken",
+              "src": "contracts\\UpgradTokenContract.sol:21"
+            },
+            {
+              "label": "tokenBalances",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "UpgradToken",
+              "src": "contracts\\UpgradTokenContract.sol:24"
+            },
+            {
+              "label": "allowed",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+              "contract": "UpgradToken",
+              "src": "contracts\\UpgradTokenContract.sol:25"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+              "label": "mapping(address => mapping(address => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.11"
+      },
+      "hardhat/console.sol:console": {
+        "src": "hardhat\\console.sol:4",
+        "version": {
+          "withMetadata": "5321087bc54d2b2885ddc1c5a455ae28b62e64441328b42de79445b09f6569f2",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.11"
+      }
+    }
+  ]
+}
