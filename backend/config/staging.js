@@ -17,7 +17,7 @@ config.server.port = 5001
 
 /******************** Blockchain *************************/
 config.blockchain = {}
-config.blockchain.url = "https://sepolia.infura.io/v3/dd0d1ffd15954086a4c1eed15171a62d" // Put key here : done
+config.blockchain.url = "https://sepolia.infura.io/v3/dd0d1ffd15954086a4c1eed15171a62d" // Put key here : done  //http://ganache:8545 
 config.blockchain.chainId = "5"
 /******************** Blockchain *************************/
 

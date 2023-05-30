@@ -1,12 +1,35 @@
-version: '3'
+version: "3"
 
 services:
-  frontend:
-    build: ./frontend
+  ganache:
+    build:
+      context: .
+      dockerfile: Dockerfile.ganache
     ports:
-      - 80:80
+      - "8545:8545"
+
+  smart-contract:
+    build:
+      context: ./smart-contract-hardhat
+      dockerfile: Dockerfile
+    
+    depends_on:
+      - ganache
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - 3000:3000
+    depends_on:
+      - smart-contract
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      - backend
